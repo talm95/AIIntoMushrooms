@@ -1,4 +1,6 @@
 import numpy as np
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.model_selection import train_test_split
 
 
 categories = ['edible', 'cap-shape', 'cap-surface', 'cap-color', 'bruises', 'odor', 'gill-attachment', 'gill-spacing',
@@ -23,19 +25,29 @@ def prepare_data(file_name):
             else:
                 x_line.append(line_values[category_num])
         mushrooms_data_x.append(x_line)
-    return np.array(mushrooms_data_x), np.array(mushrooms_data_y)
+
+    return mushrooms_data_x, mushrooms_data_y
 
 
 # preparing file with whole data
 def prepare_regular_mushroom_data():
-    regular_mushroom_data_x, regular_mushroom_data_y = prepare_data("Data/mushrooms_data.txt")
-    return regular_mushroom_data_x, regular_mushroom_data_y
+    return prepare_data("Data/mushrooms_data.txt")
 
 
 # preparing file with missing data
 def prepare_mushroom_data_missing():
-    mushroom_data_missing_x, mushroom_data_missing_y = prepare_data("Data/mushrooms_data_missing.txt")
-    return mushroom_data_missing_x, mushroom_data_missing_y
+    return prepare_data("Data/mushrooms_data_missing.txt")
+
+
+def one_hot_encoder(data):
+    enc = OneHotEncoder()
+    enc.fit(data)
+    return enc.transform(data).toarray()
+
+
+def split_data(mushroom_data_x, mushroom_data_y):
+    x_train, x_test, y_train, y_test = train_test_split(mushroom_data_x, mushroom_data_y)
+    return x_train, x_test, y_train, y_test
 
 
 def get_categories():

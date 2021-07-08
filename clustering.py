@@ -1,7 +1,6 @@
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.cluster import KMeans
 from sklearn.cluster import SpectralClustering
-from sklearn.preprocessing import OneHotEncoder
 
 
 def k_means(x):
@@ -20,11 +19,8 @@ def agglomerative_clustering(x):
 
 
 def cluster(data_x):
-    enc = OneHotEncoder()
-    enc.fit(data_x)
-    x = enc.transform(data_x).toarray()
-    k_means_clusters = k_means(x)
-    spectral_clusters = spectral_clustering(x)
-    agg_clusters = agglomerative_clustering(x)
+    k_means_clusters = k_means(data_x)
+    spectral_clusters = spectral_clustering(data_x)
+    agg_clusters = agglomerative_clustering(data_x)
 
     return k_means_clusters, spectral_clusters, agg_clusters
