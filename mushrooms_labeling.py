@@ -31,7 +31,7 @@ print('agglomerative clustering confusion matrix')
 print(agglomerative_clustering_conf_matrix)
 
 # Machine Learning
-labeled_data_test, labeled_data_test_encoded, random_forest_predicted, decision_tree_predicted = \
+labeled_data_test, labeled_data_test_encoded, random_forest_predicted, decision_tree_predicted, network_predicted = \
     classify(full_mushrooms_data_x, full_mushrooms_data_y, one_hot_encoded_full_mushrooms_data_x,
              one_hot_encoded_full_mushrooms_data_y)
 
@@ -42,6 +42,10 @@ print(rf_confusion_matrix)
 dt_confusion_matrix = classifiers_confusion_matrix(labeled_data_test_encoded, decision_tree_predicted)
 print('decision tree confusion matrix')
 print(dt_confusion_matrix)
+
+nn_confusion_matrix = classifiers_confusion_matrix(labeled_data_test_encoded, network_predicted)
+print('neural network confusion matrix')
+print(nn_confusion_matrix)
 
 end = time.time()
 print(end - start)
