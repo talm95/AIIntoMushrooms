@@ -8,6 +8,9 @@ categories = ['edible', 'cap-shape', 'cap-surface', 'cap-color', 'bruises', 'odo
               'stalk-color-above-ring', 'stalk-color-below-ring', 'veil-type', 'veil-color', 'ring-number',
               'ring-type', 'spore-print-color', 'population', 'habitat']
 
+labels = {'a': 'almond', 'l': 'anise', 'c': 'creosote', 'y': 'fishy', 'f': 'foul', 'm': 'musty', 'n': 'none',
+          'p': 'pungent', 's': 'spicy'}
+
 
 # generic function for preparing mushroom data based on file
 def prepare_data(file_name):
@@ -52,3 +55,7 @@ def split_data(mushroom_data_x, mushroom_data_y):
 
 def get_categories():
     return categories
+
+
+def get_labels():
+    return labels

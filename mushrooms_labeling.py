@@ -1,51 +1,40 @@
-from clustering import cluster
-from machine_learning import classify
-from data_prepare import prepare_regular_mushroom_data, prepare_mushroom_data_missing, one_hot_encoder
-from compare_methods import classifiers_confusion_matrix, cluster_confusion_matrix
-import numpy as np
 import time
+
+import numpy as np
+
+from clustering import cluster
+from data_prepare import prepare_regular_mushroom_data, one_hot_encoder, labels
+from plot_silhouette import plot_silhouette_graph
+from machine_learning import classify
+from compare_methods import plot_confusion_matrices
+from sklearn.preprocessing import OneHotEncoder
 
 start = time.time()
 
 # data preparing
 full_mushrooms_data_x, full_mushrooms_data_y = prepare_regular_mushroom_data()
-one_hot_encoded_full_mushrooms_data_x = one_hot_encoder(full_mushrooms_data_x)
-one_hot_encoded_full_mushrooms_data_y = one_hot_encoder(np.array(full_mushrooms_data_y).reshape(-1, 1))
+x_enc = OneHotEncoder()
+x_enc.fit(full_mushrooms_data_x)
+one_hot_encoded_full_mushrooms_data_x = x_enc.transform(full_mushrooms_data_x).toarray()
+
+y_enc = OneHotEncoder()
+y_enc.fit(np.array(full_mushrooms_data_y).reshape(-1, 1))
+one_hot_encoded_full_mushrooms_data_y = y_enc.transform(np.array(full_mushrooms_data_y).reshape(-1, 1)).toarray()
 
 # Clustering
-k_means_labeled, spectral_clustering_labeled, agglomerative_clustering_labeled = cluster(
-    one_hot_encoded_full_mushrooms_data_x)
-
-k_means_conf_matrix = cluster_confusion_matrix(one_hot_encoded_full_mushrooms_data_y, k_means_labeled)
-print('k_means confusion matrix')
-print(k_means_conf_matrix)
-
-spectral_clustering_conf_matrix = cluster_confusion_matrix(one_hot_encoded_full_mushrooms_data_y,
-                                                           spectral_clustering_labeled)
-print('spectral clustering confusion matrix')
-print(spectral_clustering_conf_matrix)
-
-agglomerative_clustering_conf_matrix = cluster_confusion_matrix(one_hot_encoded_full_mushrooms_data_y,
-                                                                agglomerative_clustering_labeled)
-print('agglomerative clustering confusion matrix')
-print(agglomerative_clustering_conf_matrix)
+for clusters_num in [7, 8, 9]:
+    k_means_labeled, spectral_clustering_labeled, agglomerative_clustering_labeled = cluster(
+        one_hot_encoded_full_mushrooms_data_x, clusters_num)
+    plot_silhouette_graph(one_hot_encoded_full_mushrooms_data_x, k_means_labeled, spectral_clustering_labeled,
+                          agglomerative_clustering_labeled, clusters_num)
 
 # Machine Learning
 labeled_data_test, labeled_data_test_encoded, random_forest_predicted, decision_tree_predicted, network_predicted = \
     classify(full_mushrooms_data_x, full_mushrooms_data_y, one_hot_encoded_full_mushrooms_data_x,
              one_hot_encoded_full_mushrooms_data_y)
 
-rf_confusion_matrix = classifiers_confusion_matrix(labeled_data_test_encoded, random_forest_predicted)
-print('random forest confusion matrix')
-print(rf_confusion_matrix)
-
-dt_confusion_matrix = classifiers_confusion_matrix(labeled_data_test_encoded, decision_tree_predicted)
-print('decision tree confusion matrix')
-print(dt_confusion_matrix)
-
-nn_confusion_matrix = classifiers_confusion_matrix(labeled_data_test_encoded, network_predicted)
-print('neural network confusion matrix')
-print(nn_confusion_matrix)
+plot_confusion_matrices(labeled_data_test_encoded, random_forest_predicted, decision_tree_predicted,
+                        network_predicted, y_enc.categories_)
 
 end = time.time()
 print(end - start)
