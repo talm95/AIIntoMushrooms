@@ -1,6 +1,8 @@
 from sklearn.metrics import confusion_matrix, silhouette_score, ConfusionMatrixDisplay, plot_confusion_matrix
 import matplotlib.pyplot as plt
 from data_prepare import labels
+import numpy as np
+import math
 
 
 def cluster_confusion_matrix(real_labels, clusters):
@@ -30,3 +32,11 @@ def plot_sub_confusion_matrix(real_y_encoded, predicted_y, ax, real_labels):
     matrix = confusion_matrix(real_y_encoded, predicted_y, labels=list(range(len(labels))), normalize='true')
     matrix_to_display = ConfusionMatrixDisplay(matrix, real_labels)
     matrix_to_display.plot(ax=ax, cmap=plt.cm.get_cmap('Blues'))
+
+
+def plot_loss_graph(epochs, losses):
+    epochs_axis = np.array(range(math.floor(epochs/5))) * 5
+    plt.plot(epochs_axis, losses)
+    plt.xlabel('epoch')
+    plt.ylabel('loss')
+    plt.show()
