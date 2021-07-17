@@ -6,7 +6,7 @@ from clustering import cluster
 from data_prepare import prepare_regular_mushroom_data, reduce_features, plot_explained_variance
 from plot_silhouette import plot_silhouette_graph, plot_silhouette_score_per_cluster_num
 from machine_learning import classify
-from compare_methods import plot_confusion_matrices, plot_clusters, plot_clusters_confusion_matrices,\
+from compare_methods import plot_confusion_matrices, plot_clusters_confusion_matrices,\
     plot_recall_score_per_clusters_num
 from sklearn.preprocessing import OneHotEncoder
 
@@ -49,7 +49,9 @@ for clusters_num in clusters_nums:
     #     plot_clusters(one_hot_encoded_full_mushrooms_data_x, one_hot_encoded_full_mushrooms_data_y.argmax(axis=1),
     #                   clusters_num, predicted=False)
     recalls = plot_clusters_confusion_matrices(one_hot_encoded_full_mushrooms_data_y, k_means_labeled,
-                                     spectral_clustering_labeled, agglomerative_clustering_labeled, clusters_num)
+                                               spectral_clustering_labeled, agglomerative_clustering_labeled,
+                                               clusters_num)
+
     recall_scores_per_clusters_num.append(recalls)
 plot_silhouette_score_per_cluster_num(clusters_nums, np.array(silhouette_scores_per_clusters_num))
 plot_recall_score_per_clusters_num(clusters_nums, np.array(recall_scores_per_clusters_num))
