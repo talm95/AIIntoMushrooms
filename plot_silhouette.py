@@ -8,10 +8,13 @@ import numpy as np
 def plot_silhouette_graph(data, k_means_clusters, spectral_clusters, agglomerative_clusters, n_clusters):
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3)
     fig.set_size_inches(18, 7)
-    plot_silhouette_sub_graph(data, k_means_clusters, n_clusters, ax1, 'k_means')
-    plot_silhouette_sub_graph(data, spectral_clusters, n_clusters, ax2, 'spectral_clustering')
-    plot_silhouette_sub_graph(data, agglomerative_clusters, n_clusters, ax3, 'agglomerative_clustering')
+    k_means_silhouette_score = plot_silhouette_sub_graph(data, k_means_clusters, n_clusters, ax1, 'k_means')
+    spectral_clusters_silhouette_score = plot_silhouette_sub_graph(data, spectral_clusters, n_clusters, ax2,
+                                                                  'spectral_clustering')
+    agglomerative_clusters_silhouette_score = plot_silhouette_sub_graph(data, agglomerative_clusters, n_clusters, ax3,
+                                                                        'agglomerative_clustering')
     plt.show()
+    return [k_means_silhouette_score, spectral_clusters_silhouette_score, agglomerative_clusters_silhouette_score]
 
 
 def plot_silhouette_sub_graph(data, predicted_clusters, n_clusters, ax, cluster_type):
@@ -59,3 +62,15 @@ def plot_silhouette_sub_graph(data, predicted_clusters, n_clusters, ax, cluster_
     plt.suptitle(("Silhouette analysis for KMeans clustering on sample data "
                   "with n_clusters = %d" % n_clusters),
                  fontsize=14, fontweight='bold')
+    return silhouette_avg
+
+
+def plot_silhouette_score_per_cluster_num(clusters_nums, silhouette_scores):
+    plt.plot(clusters_nums, silhouette_scores[:, 0], 'b', label="k means")
+    plt.plot(clusters_nums, silhouette_scores[:, 1], 'r', label="spectral clustering")
+    plt.plot(clusters_nums, silhouette_scores[:, 2], 'k', label="agglomertaive clustering")
+    plt.legend(loc='upper left')
+    plt.xlabel('clusters number')
+    plt.ylabel('silhouette score')
+    plt.title('silhouette scores by clusters number')
+    plt.show()

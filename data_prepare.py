@@ -1,6 +1,7 @@
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
 
 
 categories = ['edible', 'cap-shape', 'cap-surface', 'cap-color', 'bruises', 'odor', 'gill-attachment', 'gill-spacing',
@@ -65,3 +66,14 @@ def reduce_features(data_x, number_of_features):
     pca = PCA(n_components=number_of_features)
     data_x = pca.fit_transform(data_x)
     return data_x
+
+
+def plot_explained_variance(data_x):
+    pca = PCA()
+    pca.fit(data_x)
+    variance_explained = pca.explained_variance_ratio_.cumsum()
+    plt.plot(range(1, pca.n_components_ + 1)[::3], variance_explained[::3], '*')
+    plt.title('Variance explained respective to number of features')
+    plt.xlabel('# of features')
+    plt.ylabel('variance explained')
+    plt.show()

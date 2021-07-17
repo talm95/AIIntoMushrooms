@@ -25,7 +25,7 @@ def neural_network_classifier(network, data_x_train, data_x_test, data_y_train):
     network = network.double()
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = optim.SGD(network.parameters(), lr=0.03)
-    epochs = 150
+    epochs = 50
     x = torch.from_numpy(data_x_train).split(16)
     y = torch.from_numpy(data_y_train.argmax(axis=1)).split(16)
     loss_to_display = []
