@@ -1,4 +1,4 @@
-import numpy as np
+from sklearn.decomposition import PCA
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
 
@@ -59,3 +59,9 @@ def get_categories():
 
 def get_labels():
     return labels
+
+
+def reduce_features(data_x, number_of_features):
+    pca = PCA(n_components=number_of_features)
+    data_x = pca.fit_transform(data_x)
+    return data_x
