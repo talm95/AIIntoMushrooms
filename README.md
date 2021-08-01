@@ -1,9 +1,9 @@
 # AIIntoMushrooms
 
-The main file for this project is mushroom_labeling.
-running it will perform all desired methods and plot all relevant graphs
-the desired functionalities can be configured in the start of the script under the comment: "desired functionalities" (for example - running supervised learining/clustering)
-possoble funcionalities:
+The main file for this project is mushroom_labeling. *Enter*
+running it will perform all desired methods and plot all relevant graphs *Enter*
+the desired functionalities can be configured in the start of the script under the comment: "desired functionalities" (for example - running supervised learining/clustering)*Enter**
+possoble funcionalities:**Enter**
   should_reduce_features - if True, uses PCA to reduce the number of dimentions to the size specified in "number_of_features"
   should_use_clustering - if True, running the clustering models and plots the relevant results
   should_use_supervised_learning - if True, running the supervised learning models and plots the relevant results
