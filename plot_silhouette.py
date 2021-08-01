@@ -24,7 +24,7 @@ def plot_silhouette_sub_graph(data, predicted_clusters, n_clusters, ax, cluster_
 
     silhouette_avg = silhouette_score(data, predicted_clusters)
     print("For n_clusters =", n_clusters,
-          "The average silhouette_score of " + cluster_type + "is :", silhouette_avg)
+          "The average silhouette_score of " + cluster_type + " is :", silhouette_avg)
 
     # Compute the silhouette scores for each sample
     sample_silhouette_values = silhouette_samples(data, predicted_clusters)
@@ -59,8 +59,8 @@ def plot_silhouette_sub_graph(data, predicted_clusters, n_clusters, ax, cluster_
 
     ax.set_yticks([])  # Clear the yaxis labels / ticks
     ax.set_xticks([-0.1, 0, 0.2, 0.4, 0.6, 0.8, 1])
-    plt.suptitle(("Silhouette analysis for KMeans clustering on sample data "
-                  "with n_clusters = %d" % n_clusters),
+    plt.suptitle(("Silhouette score "
+                  "with %d clusters" % n_clusters),
                  fontsize=14, fontweight='bold')
     return silhouette_avg
 

@@ -29,7 +29,7 @@ def plot_cluster_confusion_matrix(ax, real_labels, clusters):
     new_matrix, mapping = rearrange_matrix(matrix)
     rearranged_clusters = rearrange_clusters(clusters, mapping)
     matrix_to_display = ConfusionMatrixDisplay(new_matrix)
-    matrix_to_display.plot(ax=ax, cmap=plt.cm.get_cmap('Blues'), values_format='.0f')
+    matrix_to_display.plot(ax=ax, cmap=plt.cm.get_cmap('Blues'), values_format='.0f', colorbar=False)
     recall = recall_score(real_labels.argmax(axis=1), rearranged_clusters, average='micro')
     return recall
 
@@ -70,14 +70,15 @@ def plot_confusion_matrices(real_y_encoded, random_forest_predicted_y, decision_
 def plot_sub_confusion_matrix(real_y_encoded, predicted_y, ax, real_labels):
     matrix = confusion_matrix(real_y_encoded, predicted_y, labels=list(range(len(labels))))
     matrix_to_display = ConfusionMatrixDisplay(matrix, real_labels)
-    matrix_to_display.plot(ax=ax, cmap=plt.cm.get_cmap('Blues'))
+    matrix_to_display.plot(ax=ax, cmap=plt.cm.get_cmap('Blues'), colorbar=False)
 
 
 def plot_loss_graph(epochs, losses):
     epochs_axis = np.array(range(math.floor(epochs/5))) * 5
     plt.plot(epochs_axis, losses)
-    plt.xlabel('epoch')
-    plt.ylabel('loss')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.title('Training Loss Vs Epoch')
     plt.show()
 
 
