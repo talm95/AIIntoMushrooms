@@ -1,5 +1,7 @@
 # AIIntoMushrooms
 
+## Full mushrooms data
+
 The main file for this project is mushroom_labeling.<br />
 running it will perform all desired methods and plot all relevant graphs<br />
 the desired functionalities can be configured in the start of the script under the comment: "desired functionalities" (for example - running supervised learining/clustering). <br />
@@ -19,3 +21,8 @@ supervised_learning - using the neural network and the other supervised learning
 clustering - using the clustering algorithms to solve to problem. <br />
 plot_silhouette - plots the silhouettes graphs for the clustering methods. <br />
 compare_methods - presenting confusion matrices and calculates recall scores. <br />
+
+## Missing Data
+
+The main file for this section is missing_data_labeling. <br />
+running it will perform the prediction of the labels and the anomaly detection and plot the graph of how many ouliers we have.
