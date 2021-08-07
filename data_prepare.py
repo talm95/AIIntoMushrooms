@@ -1,6 +1,5 @@
+import numpy as np
 from sklearn.decomposition import PCA
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
 
@@ -43,23 +42,18 @@ def prepare_mushroom_data_missing():
     return prepare_data("Data/mushrooms_data_missing.txt")
 
 
-def one_hot_encoder(data):
-    enc = OneHotEncoder()
-    enc.fit(data)
-    return enc.transform(data).toarray()
+def split_unlabeled_data(missing_data_x, missing_data_y):
+    missing_label_indices = np.where(missing_data_y == '-')
+    missing_labels_y = missing_data_y[missing_label_indices]
+    missing_labels_x = missing_data_x[missing_label_indices]
+    labeled_y = np.delete(missing_data_y, missing_label_indices)
+    labeled_x = np.delete(missing_data_x, missing_label_indices, axis=0)
 
-
-def split_data(mushroom_data_x, mushroom_data_y):
-    x_train, x_test, y_train, y_test = train_test_split(mushroom_data_x, mushroom_data_y)
-    return x_train, x_test, y_train, y_test
+    return labeled_x, missing_labels_x, labeled_y, missing_labels_y
 
 
 def get_categories():
     return categories
-
-
-def get_labels():
-    return labels
 
 
 def reduce_features(data_x, number_of_features):

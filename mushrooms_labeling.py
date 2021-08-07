@@ -29,16 +29,16 @@ x_enc = OneHotEncoder()
 x_enc.fit(full_mushrooms_data_x)
 one_hot_encoded_full_mushrooms_data_x = x_enc.transform(full_mushrooms_data_x).toarray()
 
+y_enc = OneHotEncoder()
+y_enc.fit(np.array(full_mushrooms_data_y).reshape(-1, 1))
+one_hot_encoded_full_mushrooms_data_y = y_enc.transform(np.array(full_mushrooms_data_y).reshape(-1, 1)).toarray()
+
 # Variance_explained
 if should_present_variance_explained:
     plot_explained_variance(one_hot_encoded_full_mushrooms_data_x)
 
 if should_reduce_features:
     one_hot_encoded_full_mushrooms_data_x = reduce_features(one_hot_encoded_full_mushrooms_data_x, number_of_features)
-
-y_enc = OneHotEncoder()
-y_enc.fit(np.array(full_mushrooms_data_y).reshape(-1, 1))
-one_hot_encoded_full_mushrooms_data_y = y_enc.transform(np.array(full_mushrooms_data_y).reshape(-1, 1)).toarray()
 
 # Clustering
 if should_use_clustering:
